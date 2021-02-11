@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+
+    <link
+      rel="stylesheet"
+      href="https://use.fontawesome.com/releases/v5.6.3/css/all.css"
+      integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/"
+      crossorigin="anonymous"
+    />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+    <script src="script.js"></script>
+    <link rel="stylesheet" href="style.css" />
+    <title>Document editor</title>
+  </head>
+  <body>
+    <input
+      id="file-input"
+      type="file"
+      accept=".html, .htm, .doc"
+      name="name"
+      style="display: none;"
+    />
+    <input
+      type="color"
+      name="favcolor"
+      id="color"
+      onchange="changeColor();"
+      value="#919191"
+      style="display: none;"
+    />
+    <div style="margin-top: 15px;"></div>
+    <div id="editorContainer">
+      <div id="toolbar">
+        <button
+          class="btn fa fa-bold"
+          onclick="document.execCommand('bold',true, null )"
+        ></button>
+        <button
+          class="btn fa fa-italic"
+          onclick="document.execCommand('italic', true, null)"
+        ></button>
+        <button
+          class="btn fa fa-underline"
+          onclick="document.execCommand('underline', true, null)"
+        ></button>
+        <button
+          class="btn fa fa-strikethrough"
+          onclick="document.execCommand('strikethrough', true, null)"
+        ></button>
+        
+        <div class="btn dropdown">
+          <button class="dropbtn btn"><i class="fa fa-align-left"></i> Justify</button>
+          <div class="dropdown-content">
+            <a
+              href="#"
+              class="btn"
+              onclick="document.execCommand('justifyLeft',false,null)"
+              ><i class="icon fa fa-align-left"></i> Left</a
+            >
+            <a
+              href="#"
+              class="btn"
+              onclick="document.execCommand('justifyCenter',false,null)"
+              ><i class="icon fa fa-align-center"></i> Center</a
+            >
+            <a
+              href="#"
+              class="btn"
+              onclick="document.execCommand('justifyRight',false,null)"
+              ><i class="icon fa fa-align-right"></i> Right</a
+            >
+            <a
+              href="#"
+              class="btn"
+              onclick="document.execCommand('justifyFull',false,null)"
+              ><i class="icon fa fa-align-justify"></i> Full</a
+            >
+          </div>
+        </div>
+
+        <button
+          class="btn fa fa-list-ul"
+          onclick="document.execCommand('insertUnorderedList', false, null)"
+        ></button>
+        <button
+          class="btn fa fa-list-ol"
+          onclick="document.execCommand('insertOrderedList', false, null)"
+        ></button>
+<!--         <button
+          class="btn fas fa-paragraph"
+          onclick="document.execCommand('insertParagraph', false, null)"
+        ></button> -->
+        <div class="btn dropdown">
+          <button class="dropbtn"><i class="fas fa-font"></i> Font</button>
+          <div class="dropdown-content">
+            <a
+              href="#"
+              style="font-family: Arial;"
+              onclick="document.execCommand('fontName', false, 'Arial');"
+              >Arial</a
+            >
+            <a
+              href="#"
+              style="font-family: Arial Black;"
+              onclick="document.execCommand('fontName', false, 'Arial Black');"
+              >Arial Black</a
+            >
+            <a
+              href="#"
+              style="font-family: Comic Sans MS;"
+              onclick="document.execCommand('fontName', false, 'Comic Sans MS');"
+              >Comic Sans MS</a
+            >
+            <a
+              href="#"
+              style="font-family:Courier New;"
+              onclick="document.execCommand('fontName', false, 'Courier New');"
+              >Courier New</a
+            >
+            <a
+              href="#"
+              style="font-family: Helvetica;"
+              onclick="document.execCommand('fontName', false, 'Helvetica');"
+              >Helvetica</a
+            >
+            <a
+              href="#"
+              style="font-family: Impact"
+              onclick="document.execCommand('fontName', false, 'Impact');"
+              >Impact</a
+            >
+            <a
+              href="#"
+              style="font-family: Times New Roman;"
+              onclick="document.execCommand('fontName', false, 'Times New Roman');"
+              >Times New Roman</a
+            >
+            <a
+              href="#"
+              style="font-family: Verdana;"
+              onclick="document.execCommand('fontName', false, 'Verdana');"
+              >Verdana</a
+            >
+          </div>
+        </div>
+        <button class="btn fas fa-text-height" onclick="changeSize();"></button>
+        <button
+          class="btn fas fa-palette"
+          onclick="document.getElementById('color').click();"
+        ></button>
+        <div class="btn dropdown">
+          <button class="dropbtn"><i class="fas fa-heading"></i> Text styles</button>
+          <div class="dropdown-content">
+            <a
+              href="#"
+              onclick="document.execCommand('formatBlock', false, 'h1');"
+              ><i class="fas fa-heading"></i> <font size="4">Heading 1</font></a
+            >
+            <a
+              href="#"
+              onclick="document.execCommand('formatBlock', false, 'h2');"
+              ><i class="fas fa-heading"></i> <font size="3">Heading 2</font></a
+            >
+            <a
+              href="#"
+              onclick="document.execCommand('formatBlock', false, 'h3');"
+              ><i class="fas fa-heading"></i> <font size="2">Heading 3</font></a
+            >
+            <a
+              href="#"
+              onclick="document.execCommand('formatBlock', false, 'p');"
+              ><i class="fas fa-paragraph"></i> Paragraph</a
+            >
+            <a
+              href="#"
+              onclick="insertQuote()"
+              ><i class="fas fa-quote-right"></i> Quote</a
+            >
+          </div>
+        </div>
+        <button class="btn fas fa-link" onclick="insertLink()"></button>
+        <button
+          class="btn fas fa-unlink"
+          onclick="document.execCommand('unlink', false, null)"
+        ></button>
+        
+        <div class="sectionend"></div>
+        
+        <button class="btn fas fa-image" onclick="insertImage()"></button>
+        <button class="btn fas fa-video" onclick="insertVideo()"></button>
+        <button class="btn fas fa-table" onclick="insertTable();"></button>
+        <button class="btn fas fa-code" onclick="GetCode();"></button>
+        
+        <div class="sectionend"></div>
+        
+        <button class="btn fas fa-print" onclick="printDoc();"></button>
+        <button
+          class="btn fas fa-undo"
+          onclick="document.execCommand('undo',false,null)"
+        ></button>
+        <button
+          class="btn fas fa-redo"
+          onclick="document.execCommand('redo',false,null)"
+        ></button>
+        <button class="btn fas fa-save" onclick="Save();"></button>
+        <button class="btn fas fa-folder-open" onclick="Open();"></button>
+      </div>
+      <div id="Editor" contenteditable="true" spellcheck="true">
+        <h1>Simple Document Editor</h1>
+        <p>
+          This is a simple document editor.
+        </p>
+      </div>
+    </div>
+  </body>
+</html>
